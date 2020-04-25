@@ -66,6 +66,7 @@ app.get('/add', async (req, res) => {
 
 });
 app.get('/update', async (req, res) => {
+    // res.render('edit');
     try {
 
         await User.findByIdAndUpdate('5e9d09feb69cd214a44d1792', {
@@ -116,7 +117,7 @@ app.post('/upload', function (req, res) {
     });
 });
 app.get('/addUser', async (req, res) =>{
-    res.render('userlist');
+    res.render('/');
     var ten = req.query.UserName;
     var sdt = req.query.PhoneNumber;
     var tuoi = req.query.UserAge;
@@ -136,7 +137,10 @@ app.get('/addUser', async (req, res) =>{
         res.send(e);
     }
 });
-
+app.get('/showListUser', async (req, res) =>{
+    let items = await User.find({}).lean();
+    res.render('userlist', {data: items});
+});
 
 
 
