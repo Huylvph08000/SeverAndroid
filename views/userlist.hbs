@@ -1,23 +1,62 @@
+
+</body>
+</html>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <title>Bootstrap Example</title>
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 
 <div class="container">
-    <ul class="list-group">
-        {{#each data}}
+    <div class="jumbotron text-center">
+        <h1>Danh Sách người dùng</h1>
+        <form action="/" method="get">
 
-            <div>Tên người dùng: {{this.username}}, + Id: {{this._id}}</div>
-            {{/each}}
-    </ul>
+            <input class="btn btn-info btn-lg" type="submit" value="Main Page">
+        </form>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>UserName</th>
+            <th>Age</th>
+            <th>Phone Number</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        {{#each data}}
+            <tbody>
+            <tr>
+                <td>{{this.username}}</td>
+                <td>{{this.age}}</td>
+                <td>{{this.phonenumber}}</td>
+                <td>
+                    <form action="/addUser" method="get">
+
+                        <input class="btn btn-info btn-lg" type="submit" value="Add user">
+                    </form>
+                    <form action="/addUser" method="get">
+
+                        <input class="btn btn-info btn-lg" type="submit" value="Add user">
+                    </form>
+<!--                    <input class="glyphicon glyphicon-trash" value="Edit">-->
+
+
+<!--                    <a href="#" class="btn btn-info btn-lg">-->
+<!--                        <span class="glyphicon glyphicon-pencil"></span> Edit-->
+<!--                    </a>-->
+                </td>
+            </tr>
+
+            </tbody>
+
+        {{/each}}
+
+    </table>
 </div>
 
 </body>

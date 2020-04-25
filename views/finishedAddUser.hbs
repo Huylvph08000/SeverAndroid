@@ -1,0 +1,48 @@
+
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="jumbotron text-center">
+        <h1>Danh Sách người dùng vừa thêm</h1>
+
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>UserName</th>
+            <th>Age</th>
+            <th>Place</th>
+        </tr>
+        </thead>
+        {{#each data}}
+            <tbody>
+            <tr>
+                <td>{{user._id}}</td>
+                <td>{{user.username}}</td>
+                <td>{{this.age}}</td>
+                <td>{{this.place}}</td>
+                <td>
+
+                </td>
+            </tr>
+
+            </tbody>
+
+        {{/each}}
+
+    </table>
+</div>
+
+</body>
+</html>

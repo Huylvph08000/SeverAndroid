@@ -46,10 +46,10 @@ let upload = multer(
 app.listen(8989);
 
 app.get('/', (req, res) => {
-    res.render('index')
+    res.render('main')
 });
-app.get('/add', async (req, res) => {
-    res.render('add')
+app.get('/addUser', async (req, res) => {
+    res.render('addUser')
     // const user = new User({
     //     username: 'abc',
     //     phonenumber: '01226364747',
@@ -116,8 +116,8 @@ app.post('/upload', function (req, res) {
         res.send('Thanh cong')
     });
 });
-app.get('/addUser', async (req, res) =>{
-    res.render('/');
+app.get('/saveAddUser', async (req, res) =>{
+
     var ten = req.query.UserName;
     var sdt = req.query.PhoneNumber;
     var tuoi = req.query.UserAge;
@@ -130,12 +130,11 @@ app.get('/addUser', async (req, res) =>{
         place: dc
     });
 
-    try {
         await user.save();
-        res.send(user);
-    } catch (e) {
-        res.send(e);
-    }
+    let items = await User.find({}).lean();
+    res.render('userlist', {data: items});
+
+
 });
 app.get('/showListUser', async (req, res) =>{
     let items = await User.find({}).lean();

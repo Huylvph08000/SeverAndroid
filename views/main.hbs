@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body class="p-3 mb-2 bg-success text-white" >
+
+<div class="jumbotron text-center bg-success text-white">
+    <h1>Sales Manager Page</h1>
+    <p>Resize this responsive page to see the effect!</p>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+
+            <h3>Users </h3>
+            <form action="/addUser" method="get">
+
+                <input class="btn btn-info btn-lg" type="submit" value="Add user">
+            </form>
+            <form action="/showListUser" method="get">
+
+                <input class="btn btn-info btn-lg" type="submit" value="Show list user">
+            </form>
+        </div>
+        <div class="col-sm-4">
+            <h3>Customer</h3>
+            <form action="/update" method="get">
+
+                <input class="btn btn-info btn-lg" type="submit" value="Add user">
+            </form>
+            <form action="/update" method="get">
+
+                <input class="btn btn-info btn-lg" type="submit" value="Show list user">
+            </form>
+        </div>
+        <div class="col-sm-4">
+            <h3>Products</h3>
+            <p>Products Manager</p>
+            <form action="/update" method="get">
+
+                <input class="btn btn-info btn-lg" type="submit" value="Add Product">
+            </form>
+            <form action="/update" method="get">
+
+                <input class="btn btn-info btn-lg" type="submit" value="Products Manager">
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
