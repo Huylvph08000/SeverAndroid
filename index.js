@@ -2,9 +2,9 @@ let express = require('express');
 
 let hbs = require('express-handlebars');
 let multer = require('multer');
-
+var parser = require('body-parser');
 let app = express();
-
+app.use(parser.urlencoded({extend: true}));
 app.engine('.hbs', hbs({
     extname: 'hbs',
     defaultLayout: '',
@@ -49,19 +49,20 @@ app.get('/', (req, res) => {
     res.render('index')
 });
 app.get('/add', async (req, res) => {
-    const user = new User({
-        username: 'abc',
-        phonenumber: '01226364747',
-        age: '20',
-        place: 'Thanh Hoa'
-    });
-
-    try {
-        await user.save();
-        res.send(user);
-    } catch (e) {
-        res.send(e);
-    }
+    res.render('add')
+    // const user = new User({
+    //     username: 'abc',
+    //     phonenumber: '01226364747',
+    //     age: '20',
+    //     place: 'Thanh Hoa'
+    // });
+    //
+    // try {
+    //     await user.save();
+    //     res.send(user);
+    // } catch (e) {
+    //     res.send(e);
+    // }
 
 });
 app.get('/update', async (req, res) => {
@@ -114,7 +115,27 @@ app.post('/upload', function (req, res) {
         res.send('Thanh cong')
     });
 });
+app.get('/addUser', async (req, res) =>{
+    res.render('userlist');
+    var ten = req.query.UserName;
+    var sdt = req.query.PhoneNumber;
+    var tuoi = req.query.UserAge;
+    var dc = req.query.Place;
 
+    const user = new User({
+        username: ten,
+        phonenumber: sdt,
+        age: tuoi,
+        place: dc
+    });
+
+    try {
+        await user.save();
+        res.send(user);
+    } catch (e) {
+        res.send(e);
+    }
+});
 
 
 

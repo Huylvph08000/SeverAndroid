@@ -15,7 +15,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "mongoose": "^5.9.9",
-    "multer": "^1.4.2"
+    "multer": "^1.4.2",
+    "body-parser": "latest"
   },
   "devDependencies": {
     "express-handlebars": "^3.1.0"
