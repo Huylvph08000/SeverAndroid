@@ -13,7 +13,7 @@
 
 <div class="container">
     <div class="jumbotron text-center">
-        <h1>Danh Sách người dùng</h1>
+        <h1>Danh Sách sản phẩm</h1>
         <form action="/" method="get">
 
             <input class="btn btn-info btn-lg" type="submit" value="Main Page">
@@ -22,26 +22,26 @@
     <table class="table">
         <thead>
         <tr>
-            <th>UserId</th>
-            <th>UserName</th>
-            <th>Age</th>
-            <th>Phone Number</th>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Quanlyti</th>
+            <th>Price</th>
             <th>Action</th>
         </tr>
         </thead>
         {{#each data}}
             <tbody>
             <tr>
-                <td><p>{{this._id}}</p></td>
-                <td>{{this.username}}</td>
-                <td>{{this.age}}</td>
-                <td>{{this.phonenumber}}</td>
+                <td>{{this._id}}</td>
+                <td>{{this.productname}}</td>
+                <td>{{this.quanlyti}}</td>
+                <td>{{this.price}}$</td>
                 <td>
-                    <form action="/UpdateUser" method="get">
+                    <form action="/update" method="get">
 
                         <input class="btn btn-info btn-lg" type="submit" value="Edit">
                     </form>
-                    <form action="/deleteUser" method="get">
+                    <form action="/deleteProduct" method="get">
 
                         <input class="btn btn-info btn-lg" type="submit" value="Delete">
                     </form>

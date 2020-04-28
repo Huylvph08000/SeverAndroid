@@ -13,11 +13,14 @@ app.engine('.hbs', hbs({
 
 let mongoose = require('mongoose');
 let userSchema = require('./model/userSchema');
+let customerSchema = require('./model/customerSchema');
+let productSchema = require('./model/productSchema');
 let User = mongoose.model('userslist', userSchema);
+let Customer = mongoose.model('customers',customerSchema );
+let Product = mongoose.model('products', productSchema);
 app.set('view engine', '.hbs')
 
-
-mongoose.connect('mongodb+srv://dbhuy:huy@123@cluster0-bz1ac.azure.mongodb.net/salesmanager', {
+mongoose.connect('mongodb+srv://Huylvph08000:Huy@1234@cluster0-ftqbl.azure.mongodb.net/QLBH?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(r => {
@@ -129,8 +132,7 @@ app.get('/saveAddUser', async (req, res) =>{
         age: tuoi,
         place: dc
     });
-
-        await user.save();
+    await user.save();
     let items = await User.find({}).lean();
     res.render('userlist', {data: items});
 
@@ -141,6 +143,86 @@ app.get('/showListUser', async (req, res) =>{
     res.render('userlist', {data: items});
 });
 
+app.get('/addCustomer', async (req, res) => {
+    res.render('addCustomer');
+});
+app.get('/saveAddCustomer', async (req, res)=>{
+    var tenkh = req.query.CustomerName;
+    var sdtkh = req.query.CustomerPhone;
+    var tuoikh = req.query.CustomerAge;
+    const customer = new Customer({
+        name: tenkh,
+        phone: sdtkh,
+        age: tuoikh,
+    });
+    await customer.save();
+    // let items = await Customer.find({}).lean();
+    // res.render('userlist', {data: items});
+    res.redirect('/showListCustomer')
+});
+
+app.get('/showListCustomer', async (req, res) =>{
+    let items = await Customer.find({}).lean();
+    res.render('customerList', {data: items});
+});
 
 
+app.get('/addProduct', async (req, res) => {
+    res.render('addProduct');
+});
 
+app.get('/saveAddProduct', async (req, res) => {
+    var tensp = req.query.productName;
+    var soluong = req.query.productQuanlyti;
+    var gia = req.query.Price;
+
+
+    const product = new Product({
+        productname: tensp,
+        quanlyti: soluong,
+        price: gia,
+    });
+    await product.save();
+    res.redirect('/showListProduct');
+});
+app.get('/showListProduct', async (req, res) =>{
+    let items = await Product.find({}).lean();
+    res.render('productlist', {data: items});
+});
+app.get('/deleteUser', async (req, res) =>{
+await User.findByIdAndDelete('5ea4f107d1ec1f1cbceb4a8b');
+res.redirect('/showListUser');
+});
+app.get('/deleteCustomer', async (req, res) =>{
+    await Customer.findByIdAndDelete('5ea4dd8bb2e4ca0a44492637');
+    res.redirect('/showListCustomer');
+});
+app.get('/deleteProduct', async (req, res) =>{
+    await Product.findByIdAndDelete('5ea4eb79902a15326468b5a6');
+    res.redirect('/showListProduct');
+});
+app.get('/updateUser', async (req, res) => {
+await User.findByIdAndUpdate('5ea4f107d1ec1f1cbceb4a8b', {
+            username: 'Lê Dũng',
+            age: 50
+        });
+        res.redirect('/showListUser');
+
+});
+app.get('/updateCustomer', async (req, res) => {
+    await Customer.findByIdAndUpdate('5ea4dd8bb2e4ca0a44492637', {
+        name: 'Lê Huy',
+        phone: '0388337546',
+        age: 19
+    });
+    res.redirect('/showListCustomer');
+
+});
+app.get('/updateProduct', async (req, res) => {
+    await Product.findByIdAndUpdate('5ea4eb79902a15326468b5a6', {
+        productname: 'Book',
+        price: 20
+    });
+    res.redirect('/showListProduct');
+
+});
