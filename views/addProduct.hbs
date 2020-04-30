@@ -13,12 +13,12 @@
 </head>
 <body class="bg-warning text-white">
 <h1> Thêm khách hàng</h1>
-<form method="get" action="/saveAddProduct">
+<form method="post" action="/saveAddProduct" enctype="multipart/form-data">
 
     <input type="text" name="productName" placeholder="Nhập tên sản phẩm"/>
     <input type="number" name="productQuanlyti" placeholder="Số lượng"/>
     <input type="number" name="Price" placeholder="Nhập Giá"/>
-
+    <input type="file" class="form-control-file" name="uploaded_file">
 
 
     <button type="submit">Save</button>

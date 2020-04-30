@@ -3,8 +3,12 @@ let express = require('express');
 let hbs = require('express-handlebars');
 let multer = require('multer');
 var parser = require('body-parser');
+
 let app = express();
 app.use(parser.urlencoded({extend: true}));
+app.use(parser.json());
+app.use('/public', express.static(__dirname + "/public"));
+
 app.engine('.hbs', hbs({
     extname: 'hbs',
     defaultLayout: '',
@@ -15,9 +19,11 @@ let mongoose = require('mongoose');
 let userSchema = require('./model/userSchema');
 let customerSchema = require('./model/customerSchema');
 let productSchema = require('./model/productSchema');
+let billSchema = require('./model/billSchema.js')
 let User = mongoose.model('userslist', userSchema);
 let Customer = mongoose.model('customers',customerSchema );
 let Product = mongoose.model('products', productSchema);
+let Bill = mongoose.model('bills', billSchema);
 app.set('view engine', '.hbs')
 
 mongoose.connect('mongodb+srv://Huylvph08000:Huy@1234@cluster0-ftqbl.azure.mongodb.net/QLBH?retryWrites=true&w=majority', {
@@ -31,7 +37,7 @@ mongoose.connect('mongodb+srv://Huylvph08000:Huy@1234@cluster0-ftqbl.azure.mongo
 let storage = multer.diskStorage({
 
     destination: function (req, res, cb) {
-        cb(null, './uploads');
+        cb(null, './public/images');
     },
     filename: function (req, file, cb) {
 
@@ -107,33 +113,38 @@ app.get('/findAll', async (req, res) => {
 
 
 let up = upload.single('avatar');
-app.post('/upload', function (req, res) {
-    up(req, res, function (error) {
-        if (error)
-            if (error instanceof multer.MulterError) {
-                return res.send('Upload File khong thanh cong');
-            } else {
-                return res.send(error.message);
-            }
+// app.post('/upload', function (req, res) {
+//     up(req, res, function (error) {
+//         if (error)
+//             if (error instanceof multer.MulterError) {
+//                 return res.send('Upload File khong thanh cong');
+//             } else {
+//                 return res.send(error.message);
+//             }
+//
+//         res.send('Thanh cong')
+//     });
+// });
+app.post('/saveAddUser', async (req, res) =>{
 
-        res.send('Thanh cong')
-    });
-});
-app.get('/saveAddUser', async (req, res) =>{
+    var ten = req.body.UserName;
+    var sdt = req.body.PhoneNumber;
+    var tuoi = req.body.UserAge;
+    var email = req.body.Email;
+    var password = req.body.Password;
 
-    var ten = req.query.UserName;
-    var sdt = req.query.PhoneNumber;
-    var tuoi = req.query.UserAge;
-    var dc = req.query.Place;
+    res.send(ten +','+password);
 
     const user = new User({
         username: ten,
         phonenumber: sdt,
         age: tuoi,
-        place: dc
+        email: email,
+        password: password
     });
-    await user.save();
-    let items = await User.find({}).lean();
+    res.send(user);
+   await user.save();
+   let items = await User.find({}).lean();
     res.render('userlist', {data: items});
 
 
@@ -171,19 +182,21 @@ app.get('/addProduct', async (req, res) => {
     res.render('addProduct');
 });
 
-app.get('/saveAddProduct', async (req, res) => {
-    var tensp = req.query.productName;
-    var soluong = req.query.productQuanlyti;
-    var gia = req.query.Price;
+app.post('/saveAddProduct',upload.single('uploaded_file'), async (req, res) => {
+    var tensp = req.body.productName;
+    var soluong = req.body.productQuanlyti;
+    var gia = req.body.Price;
 
 
     const product = new Product({
         productname: tensp,
         quanlyti: soluong,
         price: gia,
+        image: req.file.path
     });
     await product.save();
-    res.redirect('/showListProduct');
+   // res.redirect('/showListProduct');
+    res.send(product);
 });
 app.get('/showListProduct', async (req, res) =>{
     let items = await Product.find({}).lean();
@@ -225,4 +238,67 @@ app.get('/updateProduct', async (req, res) => {
     });
     res.redirect('/showListProduct');
 
+});
+app.post('/showListProducts', async (req, res) =>{
+    let items = await Product.find({}).lean();
+    res.send({data: items});
+});
+app.get('/findAllUser', async (req, res) => {
+    let users = await User.find({});
+    try {
+        res.send(users);
+    } catch (e) {
+        res.send('Khong co User Nao');
+    }
+});
+app.get('/findAllProducts', async (req, res) => {
+    let items = await Product.find({}).lean();
+    try {
+        res.send(items);
+    } catch (e) {
+        res.send('Khong co san pham Nao');
+    }
+});
+
+app.post('/postUser', async (req, res) =>{
+
+    var ten = req.body.Username;
+    var sdt = req.body.Phonenumber;
+    var tuoi = req.body.Age;
+    var email = req.body.Email;
+    var PassWord = req.body.Password;
+
+    const user1 = new User({
+        username: ten,
+        phonenumber: sdt,
+        age: tuoi,
+        email: email,
+        password: PassWord
+    });
+    //await user1.save();
+    console.log(user1);
+    await user1.save();
+});
+app.post('/postBill', async (req, res) =>{
+
+    var id = req.body.Id;
+    var name = req.body.PName;
+    var price = req.body.Price;
+    const bill = new Bill({
+        id: id,
+        name: name,
+        price: price,
+
+    });
+    //await user1.save();
+    console.log(bill);
+    await bill.save();
+});
+app.get('/findAllBills', async (req, res) => {
+    let items = await Bill.find({}).lean();
+    try {
+        res.send(items);
+    } catch (e) {
+        res.send('Khong co san pham Nao');
+    }
 });

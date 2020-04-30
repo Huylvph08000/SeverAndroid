@@ -1,11 +1,11 @@
 let mongoose = require('mongoose');
 
-const productSchema = new mongoose.Schema({
-    productname: {
+const billSchema = new mongoose.Schema({
+    id: {
         type: String,
         required: true
     },
-    quanlyti: {
+    name: {
         type: String,
         required: true
     },
@@ -13,10 +13,6 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    image: {
-        type: String,
-        required: true
-    }
 
 })
-module.exports = productSchema
+module.exports = billSchema

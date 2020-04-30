@@ -13,13 +13,13 @@
 </head>
 <body class="bg-warning text-white">
 <h1> Thêm người dùng</h1>
-<form method="get" action="/saveAddUser">
+<form method="post" action="/saveAddUser">
 
     <input type="text" name="UserName" placeholder="Nhập tên người dùng"/>
     <input type="text" name="PhoneNumber" placeholder="Nhập số điện thoại"/>
     <input type="number" name="UserAge" placeholder="Nhập tuổi"/>
-    <input type="text" name="Place" placeholder="Nhập nơi ở"/>
-
+    <input type="email" name="Email" placeholder="Nhập email"/>
+    <input type="password" name="Password" placeholder="Nhập mật khẩu"/>
 
     <button type="submit">Save</button>
 
